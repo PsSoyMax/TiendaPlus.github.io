@@ -1,1 +1,1176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Plus - Venta de Accesorios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lila: #9c88ff;
+            --lila-claro: #c2b5ff;
+            --lila-oscuro: #7b6ce0;
+            --lila-suave: #f8f6ff;
+            --blanco: #ffffff;
+            --dorado: #ffd700;
+            --dorado-oscuro: #e6c200;
+            --gris: #f5f5f7;
+            --texto: #2d3748;
+            --sombra: 0 5px 15px rgba(156, 136, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: var(--blanco);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: var(--blanco);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--dorado);
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--lila-oscuro);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--texto);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background: var(--lila-suave);
+            color: var(--lila-oscuro);
+        }
+        
+        .admin-btn {
+            background: var(--dorado);
+            color: var(--texto) !important;
+            font-weight: 600;
+        }
+        
+        .admin-btn:hover {
+            background: var(--dorado-oscuro) !important;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--lila-claro) 0%, var(--lila) 100%);
+            color: var(--blanco);
+            padding: 10rem 0 5rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        
+        .btn-primary {
+            background: var(--blanco);
+            color: var(--lila-oscuro);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: var(--dorado);
+            color: var(--texto);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--dorado-oscuro);
+            transform: translateY(-2px);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 3rem 0;
+            background: var(--gris);
+            text-align: center;
+        }
+        
+        .categories h2 {
+            font-size: 2.2rem;
+            color: var(--lila-oscuro);
+            margin-bottom: 2rem;
+        }
+        
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: var(--blanco);
+            border: 2px solid var(--lila);
+            color: var(--lila-oscuro);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--lila);
+            color: var(--blanco);
+        }
+        
+        /* Products Gallery */
+        .products-gallery {
+            padding: 3rem 0;
+            display: none;
+        }
+        
+        .products-gallery.active {
+            display: block;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--lila-oscuro);
+            margin-bottom: 2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: var(--blanco);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--lila);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: var(--lila-suave);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-image .placeholder {
+            font-size: 4rem;
+            color: var(--lila);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--lila-oscuro);
+        }
+        
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+            margin: 0.5rem 0;
+        }
+        
+        /* Order Form */
+        .order {
+            padding: 5rem 0;
+            background: var(--blanco);
+        }
+        
+        .order-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--blanco);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--sombra);
+            border: 2px solid var(--lila-suave);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--lila-oscuro);
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--lila-suave);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--lila);
+            outline: none;
+        }
+        
+        .form-submit {
+            background: var(--lila);
+            color: var(--blanco);
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .form-submit:hover {
+            background: var(--lila-oscuro);
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .admin-login {
+            background: var(--blanco);
+            width: 90%;
+            max-width: 400px;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .admin-content {
+            background: var(--blanco);
+            width: 95%;
+            max-width: 1200px;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--lila-suave);
+        }
+        
+        .close-admin {
+            background: var(--lila);
+            color: var(--blanco);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--lila-suave);
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--texto);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .admin-tab.active {
+            color: var(--lila-oscuro);
+            border-bottom: 3px solid var(--lila);
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .product-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-full {
+            grid-column: 1 / -1;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            background: var(--gris);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .product-item {
+            border: 1px solid var(--lila-suave);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .product-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-edit {
+            background: var(--lila);
+            color: var(--blanco);
+        }
+        
+        .btn-delete {
+            background: #ff6b6b;
+            color: var(--blanco);
+        }
+        
+        .pedidos-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .pedidos-table th, .pedidos-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--lila-suave);
+        }
+        
+        .pedidos-table th {
+            background: var(--lila-suave);
+            color: var(--lila-oscuro);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--lila-oscuro);
+            color: var(--blanco);
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-icons a {
+            color: var(--blanco);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--dorado);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .product-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="logo-text">Tienda Plus</div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="active">Inicio</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#pedidos">Hacer Pedido</a></li>
+                    <li><a href="#" class="admin-btn" onclick="openAdmin()">
+                        <i class="fas fa-lock"></i> Admin
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>Venta de Accesorios Escolares</h1>
+            <p>Pegatinas, collares y llaveros para estudiantes de 4to, 5to y 6to grado</p>
+            <div style="margin-top: 2rem;">
+                <a href="#catalogo" class="btn btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Ver Catálogo
+                </a>
+                <a href="#pedidos" class="btn btn-secondary">
+                    <i class="fas fa-cart-plus"></i> Hacer Pedido
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories" id="catalogo">
+        <div class="container">
+            <h2>Nuestro Catálogo</h2>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="todos">Todos los Productos</button>
+                <button class="category-btn" data-category="pegatinas">Pegatinas</button>
+                <button class="category-btn" data-category="collares">Collares</button>
+                <button class="category-btn" data-category="llaveros">Llaveros</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Gallery -->
+    <section class="products-gallery active" id="gallery-todos">
+        <div class="container">
+            <h2 class="gallery-title">Todos los Productos</h2>
+            <div class="products-grid" id="products-grid-todos">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section class="products-gallery" id="gallery-pegatinas">
+        <div class="container">
+            <h2 class="gallery-title">Pegatinas</h2>
+            <div class="products-grid" id="products-grid-pegatinas">
+                <!-- Las pegatinas se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section class="products-gallery" id="gallery-collares">
+        <div class="container">
+            <h2 class="gallery-title">Collares</h2>
+            <div class="products-grid" id="products-grid-collares">
+                <!-- Los collares se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section class="products-gallery" id="gallery-llaveros">
+        <div class="container">
+            <h2 class="gallery-title">Llaveros</h2>
+            <div class="products-grid" id="products-grid-llaveros">
+                <!-- Los llaveros se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form -->
+    <section class="order" id="pedidos">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.2rem; color: var(--lila-oscuro); margin-bottom: 2rem;">Hacer Pedido</h2>
+            <form class="order-form" id="pedidoForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="grado">Grado:</label>
+                    <select id="grado" name="grado" required>
+                        <option value="">Selecciona tu grado</option>
+                        <option value="4to">4to Grado</option>
+                        <option value="5to">5to Grado</option>
+                        <option value="6to">6to Grado</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="producto">Producto:</label>
+                    <select id="producto" name="producto" required>
+                        <option value="">Selecciona un producto</option>
+                        <!-- Las opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" min="1" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="detalles">Detalles (opcional):</label>
+                    <textarea id="detalles" name="detalles" rows="3" placeholder="Color preferido, diseño específico, etc."></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i> Enviar Pedido
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>Tienda Plus</h3>
+                    <p>Venta de accesorios para estudiantes</p>
+                </div>
+                
+                <div>
+                    <h3>Contacto</h3>
+                    <p>Email: ventas@tiendaplus.com</p>
+                    <p>Teléfono: (123) 456-7890</p>
+                </div>
+                
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Tienda Plus. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-login" id="adminLogin">
+            <h2 style="color: var(--lila-oscuro); margin-bottom: 1.5rem;">
+                <i class="fas fa-lock"></i> Acceso Administrador
+            </h2>
+            <div class="form-group">
+                <input type="password" id="adminPassword" placeholder="Ingresa la contraseña" style="width: 100%;">
+            </div>
+            <button onclick="checkAdminPassword()" class="form-submit" style="margin-top: 1rem;">
+                Ingresar
+            </button>
+            <p id="loginError" style="color: red; margin-top: 1rem; display: none;">
+                Contraseña incorrecta
+            </p>
+        </div>
+        
+        <div class="admin-content" id="adminContent">
+            <div class="admin-header">
+                <h2 style="color: var(--lila-oscuro);">
+                    <i class="fas fa-cog"></i> Panel de Administración
+                </h2>
+                <button class="close-admin" onclick="closeAdmin()">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="productos">Gestionar Productos</button>
+                <button class="admin-tab" data-tab="pedidos">Ver Pedidos</button>
+                <button class="admin-tab" data-tab="configuracion">Configuración</button>
+            </div>
+            
+            <div class="admin-section active" id="section-productos">
+                <h3>Agregar Nuevo Producto</h3>
+                <form id="productForm" class="product-form">
+                    <div class="form-group">
+                        <label for="productName">Nombre del Producto:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productCategory">Categoría:</label>
+                        <select id="productCategory" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="pegatinas">Pegatinas</option>
+                            <option value="collares">Collares</option>
+                            <option value="llaveros">Llaveros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productPrice">Precio:</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productDescription">Descripción:</label>
+                        <textarea id="productDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group form-full">
+                        <label for="productImage">Imagen del Producto:</label>
+                        <input type="file" id="productImage" accept="image/*">
+                        <div class="image-preview" id="imagePreview">
+                            <div class="placeholder">Vista previa de la imagen</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-full">
+                        <button type="submit" class="form-submit">
+                            <i class="fas fa-plus"></i> Agregar Producto
+                        </button>
+                    </div>
+                </form>
+                
+                <h3>Productos Existentes</h3>
+                <div class="product-list" id="productList">
+                    <!-- Los productos se cargarán aquí -->
+                </div>
+            </div>
+            
+            <div class="admin-section" id="section-pedidos">
+                <h3>Pedidos Recientes</h3>
+                <table class="pedidos-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Grado</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pedidosTable">
+                        <!-- Los pedidos se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="admin-section" id="section-configuracion">
+                <h3>Configuración de la Tienda</h3>
+                <div class="product-form">
+                    <div class="form-group">
+                        <label for="storeName">Nombre de la Tienda:</label>
+                        <input type="text" id="storeName" value="Tienda Plus">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="storeEmail">Email de Contacto:</label>
+                        <input type="email" id="storeEmail" value="ventas@tiendaplus.com">
+                    </div>
+                    
+                    <div class="form-group form-full">
+                        <button class="form-submit">
+                            <i class="fas fa-save"></i> Guardar Configuración
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo para productos
+        let productos = [
+            {
+                id: 1,
+                nombre: "Pegatina de Estrellas",
+                categoria: "pegatinas",
+                precio: 2.50,
+                descripcion: "Pegatina con diseño de estrellas brillantes",
+                imagen: "https://via.placeholder.com/300x200/9c88ff/ffffff?text=Pegatina+Estrellas"
+            },
+            {
+                id: 2,
+                nombre: "Collar de Corazón",
+                categoria: "collares",
+                precio: 8.00,
+                descripcion: "Collar elegante con dije de corazón",
+                imagen: "https://via.placeholder.com/300x200/c2b5ff/ffffff?text=Collar+Corazón"
+            },
+            {
+                id: 3,
+                nombre: "Llavero de Panda",
+                categoria: "llaveros",
+                precio: 3.00,
+                descripcion: "Llavero adorable con forma de panda",
+                imagen: "https://via.placeholder.com/300x200/7b6ce0/ffffff?text=Llavero+Panda"
+            }
+        ];
+
+        // Datos de ejemplo para pedidos
+        let pedidos = [
+            { id: 1, nombre: "María González", grado: "5to", producto: "Pegatina de Estrellas", cantidad: 2, fecha: "2023-11-15" },
+            { id: 2, nombre: "Carlos López", grado: "4to", producto: "Llavero de Panda", cantidad: 1, fecha: "2023-11-14" },
+            { id: 3, nombre: "Ana Martínez", grado: "6to", producto: "Collar de Corazón", cantidad: 3, fecha: "2023-11-13" }
+        ];
+
+        // Función para cargar productos en el catálogo
+        function cargarProductos() {
+            // Limpiar las grids
+            document.querySelectorAll('.products-grid').forEach(grid => {
+                grid.innerHTML = '';
+            });
+            
+            // Cargar productos en cada categoría
+            productos.forEach(producto => {
+                const productCard = `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="${producto.imagen}" alt="${producto.nombre}">
+                        </div>
+                        <div class="product-info">
+                            <h3>${producto.nombre}</h3>
+                            <p>${producto.descripcion}</p>
+                            <div class="product-price">$${producto.precio.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Agregar a la categoría correspondiente
+                document.getElementById(`products-grid-${producto.categoria}`).innerHTML += productCard;
+                document.getElementById('products-grid-todos').innerHTML += productCard;
+            });
+            
+            // Actualizar opciones del formulario de pedidos
+            const selectProducto = document.getElementById('producto');
+            selectProducto.innerHTML = '<option value="">Selecciona un producto</option>';
+            
+            productos.forEach(producto => {
+                const option = document.createElement('option');
+                option.value = producto.id;
+                option.textContent = `${producto.nombre} - $${producto.precio.toFixed(2)}`;
+                selectProducto.appendChild(option);
+            });
+        }
+
+        // Función para cargar productos en el panel de administración
+        function cargarProductosAdmin() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            
+            productos.forEach(producto => {
+                const productItem = `
+                    <div class="product-item">
+                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                        <h4>${producto.nombre}</h4>
+                        <p>$${producto.precio.toFixed(2)}</p>
+                        <div class="product-actions">
+                            <button class="btn-small btn-edit" onclick="editarProducto(${producto.id})">Editar</button>
+                            <button class="btn-small btn-delete" onclick="eliminarProducto(${producto.id})">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+                productList.innerHTML += productItem;
+            });
+        }
+
+        // Función para cargar pedidos en el panel de administración
+        function cargarPedidosAdmin() {
+            const pedidosTable = document.getElementById('pedidosTable');
+            pedidosTable.innerHTML = '';
+            
+            pedidos.forEach(pedido => {
+                const row = `
+                    <tr>
+                        <td>${pedido.id}</td>
+                        <td>${pedido.nombre}</td>
+                        <td>${pedido.grado}</td>
+                        <td>${pedido.producto}</td>
+                        <td>${pedido.cantidad}</td>
+                        <td>${pedido.fecha}</td>
+                        <td>
+                            <button class="btn-small btn-edit">Completado</button>
+                            <button class="btn-small btn-delete">Cancelar</button>
+                        </td>
+                    </tr>
+                `;
+                pedidosTable.innerHTML += row;
+            });
+        }
+
+        // Función para abrir el panel de administración
+        function openAdmin() {
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminContent').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').style.display = 'none';
+        }
+        
+        // Función para cerrar el panel de administración
+        function closeAdmin() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+        
+        // Función para verificar la contraseña del administrador
+        function checkAdminPassword() {
+            const password = document.getElementById('adminPassword').value;
+            const correctPassword = "04/12/2008";
+            const errorElement = document.getElementById('loginError');
+            
+            if (password === correctPassword) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                cargarProductosAdmin();
+                cargarPedidosAdmin();
+            } else {
+                errorElement.style.display = 'block';
+            }
+        }
+
+        // Función para cambiar entre categorías
+        function cambiarCategoria(categoria) {
+            // Ocultar todas las galerías
+            document.querySelectorAll('.products-gallery').forEach(gallery => {
+                gallery.classList.remove('active');
+            });
+            
+            // Mostrar la galería seleccionada
+            document.getElementById(`gallery-${categoria}`).classList.add('active');
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.category-btn[data-category="${categoria}"]`).classList.add('active');
+        }
+
+        // Función para cambiar entre pestañas del admin
+        function cambiarPestania(pestania) {
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.admin-tab[data-tab="${pestania}"]`).classList.add('active');
+            
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`section-${pestania}`).classList.add('active');
+        }
+
+        // Función para agregar un nuevo producto
+        function agregarProducto(event) {
+            event.preventDefault();
+            
+            const nombre = document.getElementById('productName').value;
+            const categoria = document.getElementById('productCategory').value;
+            const precio = parseFloat(document.getElementById('productPrice').value);
+            const descripcion = document.getElementById('productDescription').value;
+            const imagenInput = document.getElementById('productImage');
+            
+            // Generar una imagen de placeholder si no se subió una
+            let imagenURL = "https://via.placeholder.com/300x200/9c88ff/ffffff?text=" + encodeURIComponent(nombre);
+            
+            if (imagenInput.files && imagenInput.files[0]) {
+                // En una implementación real, aquí subirías la imagen a un servidor
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagenURL = e.target.result;
+                    finalizarAgregarProducto(nombre, categoria, precio, descripcion, imagenURL);
+                };
+                reader.readAsDataURL(imagenInput.files[0]);
+            } else {
+                finalizarAgregarProducto(nombre, categoria, precio, descripcion, imagenURL);
+            }
+        }
+
+        function finalizarAgregarProducto(nombre, categoria, precio, descripcion, imagenURL) {
+            const nuevoProducto = {
+                id: productos.length + 1,
+                nombre: nombre,
+                categoria: categoria,
+                precio: precio,
+                descripcion: descripcion,
+                imagen: imagenURL
+            };
+            
+            productos.push(nuevoProducto);
+            cargarProductos();
+            cargarProductosAdmin();
+            
+            // Limpiar el formulario
+            document.getElementById('productForm').reset();
+            document.getElementById('imagePreview').innerHTML = '<div class="placeholder">Vista previa de la imagen</div>';
+            
+            alert('Producto agregado correctamente');
+        }
+
+        // Función para previsualizar imagen
+        function previsualizarImagen(event) {
+            const input = event.target;
+            const preview = document.getElementById('imagePreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Vista previa">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Manejo del formulario de pedidos
+        document.getElementById('pedidoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const productoId = formData.get('producto');
+            const producto = productos.find(p => p.id == productoId);
+            
+            const data = {
+                nombre: formData.get('nombre'),
+                grado: formData.get('grado'),
+                producto: producto ? producto.nombre : formData.get('producto'),
+                cantidad: formData.get('cantidad'),
+                detalles: formData.get('detalles')
+            };
+            
+            try {
+                const response = await fetch('/api/pedidos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('¡Pedido enviado con éxito!');
+                    this.reset();
+                } else {
+                    alert('Error al enviar el pedido. Intenta nuevamente.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión. Verifica que el servidor esté ejecutándose.');
+            }
+        });
+
+        // Inicialización cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar productos
+            cargarProductos();
+            
+            // Configurar eventos de categorías
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    cambiarCategoria(this.getAttribute('data-category'));
+                });
+            });
+            
+            // Configurar eventos de pestañas del admin
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    cambiarPestania(this.getAttribute('data-tab'));
+                });
+            });
+            
+            // Configurar formulario de producto
+            document.getElementById('productForm').addEventListener('submit', agregarProducto);
+            document.getElementById('productImage').addEventListener('change', previsualizarImagen);
+            
+            // Navegación suave
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
